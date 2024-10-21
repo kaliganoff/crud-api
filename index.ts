@@ -81,5 +81,5 @@ createServer((req, resp) => {
         resp.write('Page not found')
         resp.end();
     }
-}).listen(4000);
-console.log('Server is running on port 4000')
+}).listen(process.env.PORT);
+console.log(`Server is running on port ${process.env.PORT}`)
