@@ -50,10 +50,10 @@ createServer((req, resp) => {
         .on('end', () => {
             body = Buffer.concat(body).toString();
                 const { username, age, hobbies } = JSON.parse(body);
-                if (username && age && hobbies) {
+                if (username || age || hobbies) {
                     const index = users.findIndex((item: any) => item.id === req.url?.replace('/api/users/', ''))
                     if (users[index]) {
-                        users[index] = { id: users[index].id, username, age, hobbies}
+                        users[index] = { id: users[index].id, username: username || users[index].username, age: age || users[index].age, hobbies: hobbies || users[index].hobbies}
                         resp.writeHead(200, { 'Content-Type': 'application/json'});
                         resp.end(JSON.stringify(users[index]));
                     } else {
@@ -62,7 +62,7 @@ createServer((req, resp) => {
                     }
                 } else {
                     resp.writeHead(400, { 'Content-Type': 'text/plain'});
-                    resp.end('The request body does not contain required fields');
+                    resp.end('The request body does not contain at least on required field');
                 }
         });
     } else if (req.url?.startsWith('/api/users/') && req.method === 'DELETE' && req.url.length > '/api/users/'.length) {
