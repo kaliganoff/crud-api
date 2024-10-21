@@ -1,13 +1,5 @@
 import { createServer } from 'http';
-
-interface User {
-    id: string;
-    username: string;
-    age: number;
-    hobbies: string[] | []
-}
-
-const users: User[] = []
+import { User, users } from './users';
 
 createServer((req, resp) => {
     if (req.url === '/api/users' && req.method === 'GET' || req.url === '/api/users/' && req.method === 'GET') {
