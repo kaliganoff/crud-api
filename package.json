@@ -4,7 +4,9 @@
   "description": "This is a simple CRUD API.",
   "main": "index.ts",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start:dev": "nodemon index.ts",
+    "start:prod": "tsc && node index.js"
   },
   "repository": {
     "type": "git",

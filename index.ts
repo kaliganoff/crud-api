@@ -1,13 +1,20 @@
 import { createServer } from 'http';
 
-const users: any = []
+interface User {
+    id: string;
+    username: string;
+    age: number;
+    hobbies: string[] | []
+}
+
+const users: User[] = []
 
 createServer((req, resp) => {
     if (req.url === '/api/users' && req.method === 'GET' || req.url === '/api/users/' && req.method === 'GET') {
         resp.writeHead(200, { 'Content-Type': 'application/json'});
         resp.end(JSON.stringify(users));
     } else if (req.url?.startsWith('/api/users/') && req.method === 'GET' && req.url.length > '/api/users/'.length) {
-        const user = users.find((item: any) => item.id === req.url?.replace('/api/users/', ''));
+        const user = users.find((item: User) => item.id === req.url?.replace('/api/users/', ''));
         if (user) {
         resp.writeHead(200, { 'Content-Type': 'application/json'});
         resp.end(JSON.stringify(user));
@@ -75,3 +82,4 @@ createServer((req, resp) => {
         resp.end();
     }
 }).listen(4000);
+console.log('Server is running on port 4000')
